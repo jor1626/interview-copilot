@@ -1,0 +1,30 @@
+# --- Datos personales (nunca subir) ---
+# CV, vacante y notas de cada entrevista
+perfil/*
+!perfil/.gitkeep
+# Registros de ejecución (pueden contener transcripciones)
+logs/
+# Carpeta temporal de ejecución (se regenera)
+.claude_workdir/
+# Audio generado del simulacro (se crea con simulacro/generar_audio.ps1)
+simulacro/*.wav
+
+# --- Python ---
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# --- Secretos ---
+.env
+.env.*
+
+# --- Sistema / editor ---
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+.claude/
+CLAUDE.md

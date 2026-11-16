@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Interview Copilot</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="brand">Interview Copilot</div>
+    <div class="status">
+      <span id="st-whisper" class="pill">Whisper…</span>
+      <span id="st-claude" class="pill">Claude…</span>
+      <span id="st-mic" class="pill">Detenido</span>
+    </div>
+    <div class="controls">
+      <label class="toggle"><input type="checkbox" id="auto" /> Auto-responder</label>
+      <button id="btn-listen" class="primary">▶ Escuchar</button>
+      <button id="btn-reload" title="Relee la carpeta perfil/ y reinicia Claude">↻ Perfil</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="answer-col">
+      <div id="current" class="card current empty">
+        <div class="q" id="cur-q">Esperando una pregunta del entrevistador…</div>
+        <div class="split">
+          <div>
+            <h3>Puntos clave</h3>
+            <ul id="cur-points"></ul>
+          </div>
+          <div>
+            <h3>Guion</h3>
+            <p id="cur-script"></p>
+          </div>
+        </div>
+      </div>
+
+      <form id="manual" class="manual">
+        <input id="manual-input" placeholder="Escribe o pega una pregunta y presiona Enter…" autocomplete="off" />
+        <button type="submit">Preguntar</button>
+      </form>
+
+      <h2>Respuestas anteriores</h2>
+      <div id="history"></div>
+    </section>
+
+    <aside class="transcript-col">
+      <h2>Transcripción del entrevistador</h2>
+      <p class="hint">Haz clic en una frase para forzar una respuesta.</p>
+      <div id="transcripts"></div>
+      <div id="log"></div>
+    </aside>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
