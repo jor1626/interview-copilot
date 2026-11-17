@@ -29,6 +29,22 @@ te sugiere qué responder en tiempo real, con **puntos clave** y un **guion** pa
    - También puedes **escribir** una pregunta abajo.
 4. Desactiva **Auto-responder** si prefieres elegir tú qué responder (gasta menos cupo).
 
+## Practicar con un simulacro
+
+Antes de una entrevista real puedes ensayar con una entrevista simulada que la voz de Windows lee en voz alta:
+
+1. Genera el audio (tarda unos segundos):
+   ```powershell
+   powershell -ExecutionPolicy Bypass -File simulacro\generar_audio.ps1
+   ```
+2. Abre la app, pulsa **▶ Escuchar** y reproduce `simulacro\simulacro_fullstack.wav`.
+   Tras cada pregunta hay 18 s de silencio para que leas la sugerencia y respondas en voz alta.
+
+Para practicar con las preguntas de tu vacante, copia `simulacro/preguntas_fullstack.txt`
+(p. ej. a `preguntas_mi_vacante.txt`), edítalo y genera el audio con
+`-Preguntas preguntas_mi_vacante.txt`. Cada línea es `INTRO|texto` (transición del entrevistador)
+o `P|texto` (pregunta, seguida de la pausa). Con `-PausaPregunta 30` tienes más tiempo para responder.
+
 ## Ajustes (`backend/config.py`)
 
 | Ajuste | Para qué |
