@@ -8,6 +8,9 @@ logs/
 .claude_workdir/
 # Audio generado del simulacro (se crea con simulacro/generar_audio.ps1)
 simulacro/*.wav
+# Simulacros creados desde la app (pueden tener preguntas de tu vacante); solo se sube el de ejemplo
+simulacro/preguntas_*.txt
+!simulacro/preguntas_fullstack.txt
 
 # --- Python ---
 .venv/

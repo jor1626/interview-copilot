@@ -106,4 +106,105 @@ $("manual").onsubmit = (e) => {
   if (v) { send({ type: "ask", text: v }); $("manual-input").value = ""; }
 };
 
+// ---------------- Simulacro ----------------
+let simActual = null; // {id, audio, ...}
+
+async function api(url, opts) {
+  const r = await fetch(url, opts);
+  const d = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(d.detail || `Error ${r.status}`);
+  return d;
+}
+function simEstado(html, err) {
+  $("sim-estado").innerHTML = html;
+  $("sim-estado").className = err ? "err" : "muted";
+}
+const escHtml = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function simSeleccionar(item) {
+  simActual = item;
+  $("sim-practicar").disabled = !item?.audio;
+}
+
+function simMostrar(d) {
+  $("sim-nombre").value = d.id;
+  $("sim-texto").value = d.texto;
+  $("sim-saludo").checked = false; // el texto cargado ya trae sus frases de saludo
+  simSeleccionar(d);
+}
+
+async function simCargarLista() {
+  const items = await api("/api/simulacros");
+  const box = $("sim-lista");
+  if (!items.length) { box.textContent = "Aún no hay simulacros."; return; }
+  box.innerHTML = "";
+  items.forEach((i) => {
+    const row = document.createElement("div");
+    row.className = "sim-item" + (simActual?.id === i.id ? " on" : "");
+    row.innerHTML = `<button class="sim-abrir"><b></b><small></small></button><button class="sim-borrar" title="Eliminar">🗑</button>`;
+    row.querySelector("b").textContent = i.id;
+    row.querySelector("small").textContent = `${i.preguntas} preguntas · ${i.audio ? "con audio" : "sin audio"}`;
+    row.querySelector(".sim-abrir").onclick = async () => {
+      try {
+        const d = await api(`/api/simulacros/${encodeURIComponent(i.id)}`);
+        simMostrar(d);
+        simEstado(`Cargado <code>${escHtml(d.txt)}</code>.`);
+        simCargarLista();
+      } catch (e) { simEstado(escHtml(e.message), true); }
+    };
+    row.querySelector(".sim-borrar").onclick = async () => {
+      if (!confirm(`¿Eliminar el simulacro "${i.id}" (preguntas y audio)?`)) return;
+      await api(`/api/simulacros/${encodeURIComponent(i.id)}`, { method: "DELETE" });
+      if (simActual?.id === i.id) simSeleccionar(null);
+      simCargarLista();
+    };
+    box.appendChild(row);
+  });
+}
+
+$("btn-sim").onclick = () => {
+  $("sim-dialog").showModal();
+  simCargarLista().catch((e) => simEstado(escHtml(e.message), true));
+};
+
+$("sim-generar").onclick = async () => {
+  const b = $("sim-generar");
+  b.disabled = true;
+  const t0 = Date.now();
+  const timer = setInterval(() => simEstado(`Generando audio con la voz de Windows… ${Math.round((Date.now() - t0) / 1000)}s`), 500);
+  try {
+    const d = await api("/api/simulacros", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nombre: $("sim-nombre").value, texto: $("sim-texto").value,
+        pausa: +$("sim-pausa").value || 18, saludo: $("sim-saludo").checked }),
+    });
+    clearInterval(timer);
+    simMostrar(d);
+    simEstado(`✅ ${d.preguntas} preguntas guardadas en <code>simulacro/${escHtml(d.txt)}</code> con su audio. Pulsa <b>▶ Practicar</b>.`);
+    simCargarLista();
+  } catch (e) {
+    clearInterval(timer);
+    simEstado(escHtml(e.message), true);
+  } finally {
+    b.disabled = false;
+  }
+};
+
+$("sim-practicar").onclick = () => {
+  if (!simActual?.audio) return;
+  if (!state.listening) send({ type: "start" });
+  $("sim-bar-nombre").textContent = simActual.id;
+  $("sim-audio").src = simActual.audio;
+  $("sim-bar").hidden = false;
+  $("sim-dialog").close();
+  // Un segundo para que arranque la captura de audio antes de la primera frase.
+  setTimeout(() => $("sim-audio").play().catch(() => log("Pulsa ▶ en el reproductor para empezar el simulacro.")), 1000);
+};
+
+$("sim-bar-cerrar").onclick = () => {
+  $("sim-audio").pause();
+  $("sim-audio").removeAttribute("src");
+  $("sim-bar").hidden = true;
+};
+
 connect();

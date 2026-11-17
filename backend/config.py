@@ -6,6 +6,7 @@ PERFIL_DIR = ROOT / "perfil"          # tu CV, la oferta y notas (.md, .txt o .p
 STATIC_DIR = ROOT / "frontend"
 CLAUDE_WORKDIR = ROOT / ".claude_workdir"  # carpeta vacía para que Claude no lea otros proyectos
 LOG_DIR = ROOT / "logs"
+SIMULACRO_DIR = ROOT / "simulacro"    # preguntas (.txt) y audios (.wav) de los simulacros
 
 HOST = "127.0.0.1"
 PORT = 8000

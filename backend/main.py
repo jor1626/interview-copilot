@@ -7,10 +7,11 @@ import time
 import webbrowser
 
 import uvicorn
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi import Body, FastAPI, HTTPException, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
 
 import config
+import simulacro
 from claude_session import ClaudeSession
 from prompt import build_system_prompt
 
@@ -150,6 +151,39 @@ async def ws_endpoint(ws: WebSocket):
         clients.discard(ws)
 
 
+# ---------------- simulacros ----------------
+@app.get("/api/simulacros")
+def listar_simulacros():
+    return simulacro.listar()
+
+
+@app.get("/api/simulacros/{sid}")
+def obtener_simulacro(sid: str):
+    try:
+        return simulacro.obtener(sid)
+    except FileNotFoundError as e:
+        raise HTTPException(404, str(e)) from e
+
+
+@app.post("/api/simulacros")
+async def crear_simulacro(datos: dict = Body(...)):
+    """Guarda las preguntas en simulacro/preguntas_<nombre>.txt y genera el audio .wav."""
+    try:
+        return await asyncio.to_thread(
+            simulacro.guardar_y_generar, str(datos.get("nombre", "")), str(datos.get("texto", "")),
+            int(datos.get("pausa") or 18), bool(datos.get("saludo", True)))
+    except (ValueError, RuntimeError) as e:
+        raise HTTPException(400, str(e)) from e
+
+
+@app.delete("/api/simulacros/{sid}")
+def borrar_simulacro(sid: str):
+    simulacro.eliminar(sid)
+    return {"ok": True}
+
+
+config.SIMULACRO_DIR.mkdir(exist_ok=True)
+app.mount("/simulacro", StaticFiles(directory=config.SIMULACRO_DIR), name="simulacro")
 app.mount("/", StaticFiles(directory=config.STATIC_DIR, html=True), name="static")
 
 

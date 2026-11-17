@@ -18,8 +18,48 @@
       <label class="toggle"><input type="checkbox" id="auto" /> Auto-responder</label>
       <button id="btn-listen" class="primary">▶ Escuchar</button>
       <button id="btn-reload" title="Relee la carpeta perfil/ y reinicia Claude">↻ Perfil</button>
+      <button id="btn-sim" title="Crea una entrevista simulada con tus preguntas para practicar">🎭 Simulacro</button>
     </div>
   </header>
+
+  <div id="sim-bar" class="sim-bar" hidden>
+    <span>🎭 <b id="sim-bar-nombre"></b></span>
+    <audio id="sim-audio" controls preload="auto"></audio>
+    <button id="sim-bar-cerrar" title="Detener y cerrar">✕</button>
+  </div>
+
+  <dialog id="sim-dialog">
+    <form method="dialog" class="sim-head">
+      <h2>🎭 Simulacro de entrevista</h2>
+      <button value="cerrar" title="Cerrar">✕</button>
+    </form>
+    <div class="sim-grid">
+      <div>
+        <label>Nombre</label>
+        <input id="sim-nombre" placeholder="Ej: backend banco" autocomplete="off" />
+        <label>Preguntas <span class="muted">(una por línea, con números o viñetas)</span></label>
+        <textarea id="sim-texto" rows="12" placeholder="1. Cuéntame sobre ti.
+2. ¿Qué es la inyección de dependencias?
+- ¿Cómo optimizas una consulta lenta?
+* ¿Cuál es tu mayor debilidad?
+
+> Las líneas con &gt; son frases del entrevistador sin pausa (opcional)."></textarea>
+        <div class="sim-opts">
+          <label class="toggle"><input type="checkbox" id="sim-saludo" checked /> Agregar saludo y despedida</label>
+          <label class="toggle">Pausa para responder <input id="sim-pausa" type="number" min="3" max="120" value="18" /> s</label>
+        </div>
+        <div class="sim-actions">
+          <button id="sim-generar" class="primary">Guardar y generar audio</button>
+          <button id="sim-practicar" disabled>▶ Practicar</button>
+        </div>
+        <div id="sim-estado" class="muted"></div>
+      </div>
+      <div>
+        <label>Guardados en <code>simulacro/</code></label>
+        <div id="sim-lista" class="muted">—</div>
+      </div>
+    </div>
+  </dialog>
 
   <main>
     <section class="answer-col">

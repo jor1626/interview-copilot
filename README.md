@@ -31,19 +31,29 @@ te sugiere qué responder en tiempo real, con **puntos clave** y un **guion** pa
 
 ## Practicar con un simulacro
 
-Antes de una entrevista real puedes ensayar con una entrevista simulada que la voz de Windows lee en voz alta:
+Antes de una entrevista real puedes ensayar con una entrevista simulada que la voz de Windows lee en voz alta.
 
-1. Genera el audio (tarda unos segundos):
-   ```powershell
-   powershell -ExecutionPolicy Bypass -File simulacro\generar_audio.ps1
-   ```
-2. Abre la app, pulsa **▶ Escuchar** y reproduce `simulacro\simulacro_fullstack.wav`.
-   Tras cada pregunta hay 18 s de silencio para que leas la sugerencia y respondas en voz alta.
+### Desde la app
 
-Para practicar con las preguntas de tu vacante, copia `simulacro/preguntas_fullstack.txt`
-(p. ej. a `preguntas_mi_vacante.txt`), edítalo y genera el audio con
-`-Preguntas preguntas_mi_vacante.txt`. Cada línea es `INTRO|texto` (transición del entrevistador)
-o `P|texto` (pregunta, seguida de la pausa). Con `-PausaPregunta 30` tienes más tiempo para responder.
+1. Pulsa **🎭 Simulacro**, ponle un nombre y escribe tus preguntas, una por línea, numeradas o con
+   viñetas (`1.`, `1)`, `-`, `*`, `•`). Las líneas que empiezan con `>` son frases del entrevistador
+   sin pausa (transiciones), por ejemplo `> Pasemos ahora al frontend.`
+2. Elige los segundos de pausa para responder y pulsa **Guardar y generar audio**.
+   Se guardan `simulacro/preguntas_<nombre>.txt` y `simulacro/simulacro_<nombre>.wav`.
+3. Pulsa **▶ Practicar**: la app empieza a escuchar y reproduce el audio. Responde en voz alta
+   apoyándote en los puntos clave.
+
+Tus simulacros quedan en la lista para editarlos o repetirlos y no se suben a git
+(solo se versiona el ejemplo `preguntas_fullstack.txt`).
+
+### Desde la terminal
+
+```powershell
+powershell -ExecutionPolicy Bypass -File simulacro\generar_audio.ps1 [-Preguntas preguntas_mi_vacante.txt] [-PausaPregunta 30]
+```
+
+Cada línea del `.txt` es `INTRO|texto` (transición del entrevistador) o `P|texto` (pregunta, seguida de
+la pausa). Si Windows no tiene una voz en español instalada, usa la voz por defecto.
 
 ## Ajustes (`backend/config.py`)
 
