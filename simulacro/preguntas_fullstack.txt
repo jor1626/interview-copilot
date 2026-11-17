@@ -1,0 +1,27 @@
+INTRO|Hola Jordan, buenos días. Muchas gracias por sacar el tiempo para esta entrevista. Yo soy Laura, líder técnica del equipo de desarrollo. La idea hoy es conocerte un poco, hablar de tu experiencia y hacerte algunas preguntas técnicas para la vacante de desarrollador full stack.
+P|Para empezar, cuéntame un poco sobre ti y sobre tu trayectoria profesional.
+P|¿Por qué te interesa esta vacante y qué te motiva a buscar un cambio en este momento?
+INTRO|Perfecto. Veo en tu hoja de vida que has trabajado mucho con Java y Spring Boot.
+P|¿Cómo estructuras un microservicio con Clean Architecture y Domain Driven Design? Explícame las capas y por qué las separas así.
+P|En el proyecto de Bancolombia usaste Spring WebFlux. ¿Cuál es la diferencia entre programación reactiva y el modelo tradicional de Spring MVC, y cuándo vale la pena usar cada uno?
+P|¿Cómo implementaste la seguridad con JWT y el modelo de roles y permisos en tus APIs?
+P|En la portabilidad numérica de Claro trabajaste con RabbitMQ. ¿Cómo manejas los mensajes que fallan o que llegan duplicados?
+INTRO|Muy bien. Pasemos ahora al frontend.
+P|Has trabajado con React y con Angular. ¿Qué diferencias principales ves entre los dos y cuál prefieres para un proyecto nuevo?
+P|¿Para qué usas TanStack Query y qué problemas te resolvió en el sistema de gestión de bodegas?
+P|¿Cómo manejas formularios muy grandes con validaciones condicionales en React sin que se afecte el rendimiento?
+P|En la aplicación para los operarios usaste una PWA con sincronización offline. ¿Cómo resolviste los conflictos cuando el dispositivo vuelve a tener conexión?
+INTRO|Ahora hablemos de bases de datos y despliegue.
+P|¿Cómo optimizarías una consulta lenta en Oracle o PostgreSQL? ¿Qué pasos sigues para diagnosticarla?
+P|Cuéntame cómo diseñaste el proceso de migración de datos de Excel a PostgreSQL y cómo garantizaste la calidad de los datos.
+P|¿Cómo es un pipeline de integración y despliegue continuo que tú hayas configurado, de principio a fin?
+INTRO|Bien, ahora algunas preguntas sobre tu forma de trabajar.
+P|Cuéntame sobre una situación difícil en un proyecto, un problema técnico grave o una fecha de entrega muy apretada, y cómo la resolviste.
+P|¿Cómo usas la inteligencia artificial en tu día a día como desarrollador, y cómo te aseguras de que el código generado tenga buena calidad?
+P|¿Cómo acompañas a compañeros con menos experiencia en el equipo?
+P|¿Cuál dirías que es tu mayor debilidad como desarrollador?
+P|Veo que tu nivel de inglés es A2. ¿Cómo te desenvuelves con documentación técnica o con equipos que hablan inglés?
+INTRO|Listo Jordan, ya casi terminamos.
+P|¿Cuál es tu aspiración salarial y en cuánto tiempo podrías empezar?
+P|Por último, ¿tienes alguna pregunta para nosotros?
+INTRO|Perfecto, muchas gracias por tu tiempo. Te estaremos contactando en los próximos días. Que tengas un buen día.
